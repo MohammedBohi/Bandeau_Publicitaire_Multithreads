@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>ExempleDeScenario.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #5f826b; font-style: italic;}
+.s4 { color: #67a37c; font-style: italic;}
+.s5 { color: #2aacb8;}
+.s6 { color: #7a7e85;}
+.s7 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ExempleDeScenario.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">bandeau</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">ExempleDeScenario </span><span class="s2">{</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* &quot;Programme principal&quot; : point d'entrée d'exécution</span>
+     <span class="s3">*</span>
+     <span class="s3">* </span><span class="s4">@param </span><span class="s3">args les &quot;arguments de ligne de commande&quot;, transmis au lancement du programme</span>
+     <span class="s3">*/</span>
+    <span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">) {</span>
+        <span class="s1">String message</span><span class="s2">;</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">args</span><span class="s2">.</span><span class="s1">length </span><span class="s2">&gt; </span><span class="s5">0</span><span class="s2">) </span><span class="s6">// J'ai au moins un paramètre</span>
+        <span class="s2">{</span>
+            <span class="s1">message </span><span class="s2">= </span><span class="s1">args</span><span class="s2">[</span><span class="s5">0</span><span class="s2">]; </span><span class="s6">// le premier paramètre</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">message </span><span class="s2">= </span><span class="s7">&quot;Démonstration du bandeau&quot;</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s6">// On cree un scenario</span>
+        <span class="s1">Scenario s </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scenario</span><span class="s2">();</span>
+        <span class="s6">// On lui ajoute des effets</span>
+        <span class="s1">s</span><span class="s2">.</span><span class="s1">addEffect</span><span class="s2">(</span><span class="s0">new </span><span class="s1">RandomEffect</span><span class="s2">(</span><span class="s1">message</span><span class="s2">, </span><span class="s5">700</span><span class="s2">), </span><span class="s5">1</span><span class="s2">);</span>
+        <span class="s1">s</span><span class="s2">.</span><span class="s1">addEffect</span><span class="s2">(</span><span class="s0">new </span><span class="s1">TeleType</span><span class="s2">(</span><span class="s7">&quot;Je m'affiche caractère par caractère&quot;</span><span class="s2">, </span><span class="s5">100</span><span class="s2">), </span><span class="s5">1</span><span class="s2">);</span>
+        <span class="s1">s</span><span class="s2">.</span><span class="s1">addEffect</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Blink</span><span class="s2">(</span><span class="s7">&quot;Je clignote 10x&quot;</span><span class="s2">, </span><span class="s5">100</span><span class="s2">), </span><span class="s5">10</span><span class="s2">);</span>
+        <span class="s1">s</span><span class="s2">.</span><span class="s1">addEffect</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Zoom</span><span class="s2">(</span><span class="s7">&quot;Je zoome&quot;</span><span class="s2">, </span><span class="s5">50</span><span class="s2">), </span><span class="s5">1</span><span class="s2">);</span>
+        <span class="s1">s</span><span class="s2">.</span><span class="s1">addEffect</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FontEnumerator</span><span class="s2">(</span><span class="s5">10</span><span class="s2">), </span><span class="s5">1</span><span class="s2">);</span>
+        <span class="s1">s</span><span class="s2">.</span><span class="s1">addEffect</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Rainbow</span><span class="s2">(</span><span class="s7">&quot;Comme c'est joli !&quot;</span><span class="s2">, </span><span class="s5">30</span><span class="s2">), </span><span class="s5">1</span><span class="s2">);</span>
+        <span class="s1">s</span><span class="s2">.</span><span class="s1">addEffect</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Rotate</span><span class="s2">(</span><span class="s7">&quot;2 tours à droite&quot;</span><span class="s2">, </span><span class="s5">180</span><span class="s2">, </span><span class="s5">4000</span><span class="s2">, </span><span class="s0">true</span><span class="s2">), </span><span class="s5">2</span><span class="s2">);</span>
+        
+        <span class="s6">// On cree les bandeaux</span>
+        <span class="s1">Bandeau b1 </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Bandeau</span><span class="s2">();</span>
+        <span class="s6">//Bandeau b2 = new Bandeau();</span>
+        <span class="s6">//Bandeau b3 = new Bandeau();</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s7">&quot;CTRL+C pour terminer le programme&quot;</span><span class="s2">);</span>
+        <span class="s6">// On doit jouer le scénario en même temps sur plusieurs bandeaux :</span>
+        <span class="s1">s</span><span class="s2">.</span><span class="s1">playOn</span><span class="s2">(</span><span class="s1">b1</span><span class="s2">);</span>
+        <span class="s6">//s.playOn(b2);</span>
+        
+        <span class="s6">// On ne doit pas pouvoir changer un scénario quand il est en train de se jouer</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">Thread</span><span class="s2">.</span><span class="s1">sleep</span><span class="s2">(</span><span class="s5">10000</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">InterruptedException e</span><span class="s2">) {}</span>
+        <span class="s1">s</span><span class="s2">.</span><span class="s1">addEffect</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Rotate</span><span class="s2">(</span><span class="s7">&quot;2 tours à gauche&quot;</span><span class="s2">, </span><span class="s5">180</span><span class="s2">, </span><span class="s5">4000</span><span class="s2">, </span><span class="s0">false</span><span class="s2">), </span><span class="s5">2</span><span class="s2">);</span>
+
+        <span class="s6">// On rejoue le scénario sur b1 quand le premier jeu est fini</span>
+        <span class="s1">s</span><span class="s2">.</span><span class="s1">playOn</span><span class="s2">(</span><span class="s1">b1</span><span class="s2">);</span>
+
+    <span class="s2">}</span>
+
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>RandomEffect.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #5f826b; font-style: italic;}
+.s4 { color: #2aacb8;}
+.s5 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+RandomEffect.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">bandeau</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.</span><span class="s1">Font</span><span class="s2">;</span>
+
+<span class="s3">/**</span>
+ <span class="s3">* Un effet qui affiche les caractères du message un par un dans un style qui rappelle l'affichage du &quot;jeu du pendu&quot; :</span>
+ <span class="s3">* Au départ, tous les caractères du message sont affichés par un trait de soulignement &quot;_&quot; Les caractères du message</span>
+ <span class="s3">* sont ensuite révélés un par un, dans un ordre aléatoire. Cet effet doit fonctionner correctement, quelle que soit la</span>
+ <span class="s3">* longueur du message à afficher</span>
+ <span class="s3">*/</span>
+<span class="s0">public class </span><span class="s1">RandomEffect </span><span class="s0">extends </span><span class="s1">Effect </span><span class="s2">{</span>
+    <span class="s0">private final </span><span class="s1">RandomSequenceGenerator myRandom </span><span class="s2">= </span><span class="s0">new </span><span class="s1">RandomSequenceGenerator</span><span class="s2">();</span>
+
+    <span class="s0">private final int </span><span class="s1">myDelay</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">RandomEffect</span><span class="s2">(</span><span class="s1">String message</span><span class="s2">, </span><span class="s0">int </span><span class="s1">delay</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">(</span><span class="s1">message</span><span class="s2">);</span>
+        <span class="s1">myDelay </span><span class="s2">= </span><span class="s1">delay</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">playOn</span><span class="s2">(</span><span class="s1">Bandeau b</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">init</span><span class="s2">(</span><span class="s1">b</span><span class="s2">);</span>
+        <span class="s1">Font initial </span><span class="s2">= </span><span class="s1">b</span><span class="s2">.</span><span class="s1">getFont</span><span class="s2">();</span>
+        <span class="s1">String message </span><span class="s2">= </span><span class="s1">b</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">();</span>
+        <span class="s1">StringBuilder display </span><span class="s2">= </span><span class="s0">new </span><span class="s1">StringBuilder</span><span class="s2">();</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s4">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">message</span><span class="s2">.</span><span class="s1">length</span><span class="s2">(); </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s1">display</span><span class="s2">.</span><span class="s1">append</span><span class="s2">(</span><span class="s5">&quot;_&quot;</span><span class="s2">);</span>
+        <span class="s2">}</span>
+
+        <span class="s1">b</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s5">&quot;Monospaced&quot;</span><span class="s2">, </span><span class="s1">Font</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">, </span><span class="s4">25</span><span class="s2">));</span>
+        <span class="s1">b</span><span class="s2">.</span><span class="s1">setMessage</span><span class="s2">(</span><span class="s1">display</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">());</span>
+        <span class="s1">b</span><span class="s2">.</span><span class="s1">sleep</span><span class="s2">(</span><span class="s1">myDelay</span><span class="s2">);</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Integer i </span><span class="s2">: </span><span class="s1">myRandom</span><span class="s2">.</span><span class="s1">randomIntegers</span><span class="s2">(</span><span class="s1">message</span><span class="s2">.</span><span class="s1">length</span><span class="s2">())) {</span>
+            <span class="s1">display</span><span class="s2">.</span><span class="s1">setCharAt</span><span class="s2">(</span><span class="s1">i</span><span class="s2">, </span><span class="s1">message</span><span class="s2">.</span><span class="s1">charAt</span><span class="s2">(</span><span class="s1">i</span><span class="s2">));</span>
+            <span class="s1">b</span><span class="s2">.</span><span class="s1">setMessage</span><span class="s2">(</span><span class="s1">display</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">());</span>
+            <span class="s1">b</span><span class="s2">.</span><span class="s1">sleep</span><span class="s2">(</span><span class="s1">myDelay</span><span class="s2">);</span>
+        <span class="s2">}</span>
+        <span class="s1">b</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">initial</span><span class="s2">);</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

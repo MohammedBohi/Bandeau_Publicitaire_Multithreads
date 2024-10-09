@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Rotate.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #5f826b; font-style: italic;}
+.s4 { color: #67a37c; font-style: italic;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Rotate.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">bandeau</span><span class="s2">;</span>
+
+<span class="s3">/**</span>
+ <span class="s3">* Un effet qui fait faire un tour complet au texte</span>
+ <span class="s3">*/</span>
+<span class="s0">public class </span><span class="s1">Rotate </span><span class="s0">extends </span><span class="s1">Effect </span><span class="s2">{</span>
+
+    <span class="s0">private final int </span><span class="s1">dureeDunTour</span><span class="s2">;</span>
+    <span class="s0">private final int </span><span class="s1">nombreDePas</span><span class="s2">;</span>
+    <span class="s0">private final boolean </span><span class="s1">clockwise</span><span class="s2">;</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* </span><span class="s4">@param </span><span class="s3">message le message, si null le message du bandeau est conservé</span>
+     <span class="s3">* </span><span class="s4">@param </span><span class="s3">pas nombre de pas de la rotation</span>
+     <span class="s3">* </span><span class="s4">@param </span><span class="s3">duree durée du tour en millisecondes</span>
+     <span class="s3">* </span><span class="s4">@param </span><span class="s3">sens sens de rotation (vrai : horaire, faux : antihoraire)</span>
+     <span class="s3">*/</span>
+    <span class="s0">public </span><span class="s1">Rotate</span><span class="s2">(</span><span class="s1">String message</span><span class="s2">, </span><span class="s0">int </span><span class="s1">pas</span><span class="s2">, </span><span class="s0">int </span><span class="s1">duree</span><span class="s2">, </span><span class="s0">boolean </span><span class="s1">sens</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">(</span><span class="s1">message</span><span class="s2">);</span>
+        <span class="s1">dureeDunTour </span><span class="s2">= </span><span class="s1">duree</span><span class="s2">;</span>
+        <span class="s1">nombreDePas </span><span class="s2">= </span><span class="s1">pas</span><span class="s2">;</span>
+        <span class="s1">clockwise </span><span class="s2">= </span><span class="s1">sens</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">playOn</span><span class="s2">(</span><span class="s1">Bandeau b</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">init</span><span class="s2">(</span><span class="s1">b</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">delay </span><span class="s2">= </span><span class="s1">dureeDunTour </span><span class="s2">/ </span><span class="s1">nombreDePas</span><span class="s2">;</span>
+        <span class="s0">double </span><span class="s1">old </span><span class="s2">= </span><span class="s1">b</span><span class="s2">.</span><span class="s1">getRotation</span><span class="s2">();</span>
+        <span class="s0">int </span><span class="s1">increment </span><span class="s2">= </span><span class="s1">clockwise </span><span class="s2">? </span><span class="s5">1 </span><span class="s2">: -</span><span class="s5">1</span><span class="s2">;</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">pas </span><span class="s2">= </span><span class="s5">0</span><span class="s2">; </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">abs</span><span class="s2">(</span><span class="s1">pas</span><span class="s2">) != </span><span class="s1">nombreDePas</span><span class="s2">; </span><span class="s1">pas </span><span class="s2">+= </span><span class="s1">increment</span><span class="s2">) {</span>
+            <span class="s0">double </span><span class="s1">theta </span><span class="s2">= (</span><span class="s1">Math</span><span class="s2">.</span><span class="s1">PI </span><span class="s2">* </span><span class="s5">2 </span><span class="s2">* </span><span class="s1">pas</span><span class="s2">) / </span><span class="s1">nombreDePas</span><span class="s2">;</span>
+            <span class="s1">b</span><span class="s2">.</span><span class="s1">setRotation</span><span class="s2">(</span><span class="s1">theta</span><span class="s2">);</span>
+            <span class="s1">b</span><span class="s2">.</span><span class="s1">sleep</span><span class="s2">(</span><span class="s1">delay</span><span class="s2">);</span>
+        <span class="s2">}</span>
+        <span class="s1">b</span><span class="s2">.</span><span class="s1">setRotation</span><span class="s2">(</span><span class="s1">old</span><span class="s2">);</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

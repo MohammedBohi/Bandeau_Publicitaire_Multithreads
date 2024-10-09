@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>FontEnumerator.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #5f826b; font-style: italic;}
+.s4 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FontEnumerator.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">bandeau</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.</span><span class="s1">GraphicsEnvironment</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.</span><span class="s1">Font</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Random</span><span class="s2">;</span>
+
+<span class="s3">/**</span>
+ <span class="s3">* L'effet FontEnumerator tire au sort parmi les polices de caractère disponibles et affiche dans le bandeau le nom de</span>
+ <span class="s3">* la police, affiche dans la police de caractère elle même</span>
+ <span class="s3">*/</span>
+<span class="s0">public class </span><span class="s1">FontEnumerator </span><span class="s0">extends </span><span class="s1">Effect </span><span class="s2">{</span>
+
+    <span class="s0">private final </span><span class="s1">String</span><span class="s2">[] </span><span class="s1">fonts</span><span class="s2">;</span>
+    <span class="s0">private final int </span><span class="s1">maxFonts</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">Random generator</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">FontEnumerator</span><span class="s2">(</span><span class="s0">int </span><span class="s1">numberOfFontsToShow</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">(</span><span class="s0">null</span><span class="s2">);</span>
+        <span class="s1">maxFonts </span><span class="s2">= </span><span class="s1">numberOfFontsToShow</span><span class="s2">;</span>
+        <span class="s1">GraphicsEnvironment gEnv </span><span class="s2">= </span><span class="s1">GraphicsEnvironment</span><span class="s2">.</span><span class="s1">getLocalGraphicsEnvironment</span><span class="s2">();</span>
+        <span class="s1">fonts </span><span class="s2">= </span><span class="s1">gEnv</span><span class="s2">.</span><span class="s1">getAvailableFontFamilyNames</span><span class="s2">();</span>
+        <span class="s1">generator </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Random</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">currentTimeMillis</span><span class="s2">());</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">playOn</span><span class="s2">(</span><span class="s1">Bandeau bandeau</span><span class="s2">) {</span>
+        <span class="s1">Font initial </span><span class="s2">= </span><span class="s1">bandeau</span><span class="s2">.</span><span class="s1">getFont</span><span class="s2">();</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">repeat </span><span class="s2">= </span><span class="s4">0</span><span class="s2">; </span><span class="s1">repeat </span><span class="s2">&lt; </span><span class="s1">maxFonts</span><span class="s2">; </span><span class="s1">repeat</span><span class="s2">++) {</span>
+            <span class="s0">int </span><span class="s1">fontNumber </span><span class="s2">= </span><span class="s1">generator</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">(</span><span class="s1">fonts</span><span class="s2">.</span><span class="s1">length</span><span class="s2">);</span>
+            <span class="s1">bandeau</span><span class="s2">.</span><span class="s1">setMessage</span><span class="s2">(</span><span class="s1">fonts</span><span class="s2">[</span><span class="s1">fontNumber</span><span class="s2">]);</span>
+            <span class="s1">bandeau</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s1">fonts</span><span class="s2">[</span><span class="s1">fontNumber</span><span class="s2">], </span><span class="s1">Font</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">, </span><span class="s4">16</span><span class="s2">));</span>
+            <span class="s1">bandeau</span><span class="s2">.</span><span class="s1">sleep</span><span class="s2">(</span><span class="s4">500</span><span class="s2">);</span>
+        <span class="s2">}</span>
+
+        <span class="s1">bandeau</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">initial</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

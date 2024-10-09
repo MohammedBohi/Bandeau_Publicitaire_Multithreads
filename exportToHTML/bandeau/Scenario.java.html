@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>Scenario.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #5f826b; font-style: italic;}
+.s4 { color: #67a37c; font-style: italic;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Scenario.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">bandeau</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">LinkedList</span><span class="s2">;</span>
+
+<span class="s3">/**</span>
+ <span class="s3">* Classe utilitaire pour représenter la classe-association UML</span>
+ <span class="s3">*/</span>
+<span class="s0">class </span><span class="s1">ScenarioElement </span><span class="s2">{</span>
+
+    <span class="s1">Effect effect</span><span class="s2">;</span>
+    <span class="s0">int </span><span class="s1">repeats</span><span class="s2">;</span>
+
+    <span class="s1">ScenarioElement</span><span class="s2">(</span><span class="s1">Effect e</span><span class="s2">, </span><span class="s0">int </span><span class="s1">r</span><span class="s2">) {</span>
+        <span class="s1">effect </span><span class="s2">= </span><span class="s1">e</span><span class="s2">;</span>
+        <span class="s1">repeats </span><span class="s2">= </span><span class="s1">r</span><span class="s2">;</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+<span class="s3">/**</span>
+ <span class="s3">* Un scenario mémorise une liste d'effets, et le nombre de repetitions pour chaque effet</span>
+ <span class="s3">* Un scenario sait se jouer sur un bandeau.</span>
+ <span class="s3">*/</span>
+<span class="s0">public class </span><span class="s1">Scenario </span><span class="s2">{</span>
+
+    <span class="s0">private final </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">ScenarioElement</span><span class="s2">&gt; </span><span class="s1">myElements </span><span class="s2">= </span><span class="s0">new </span><span class="s1">LinkedList</span><span class="s2">&lt;&gt;();</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Ajouter un effect au scenario.</span>
+     <span class="s3">*</span>
+     <span class="s3">* </span><span class="s4">@param </span><span class="s3">e l'effet à ajouter</span>
+     <span class="s3">* </span><span class="s4">@param </span><span class="s3">repeats le nombre de répétitions pour cet effet</span>
+     <span class="s3">*/</span>
+    <span class="s0">public void </span><span class="s1">addEffect</span><span class="s2">(</span><span class="s1">Effect e</span><span class="s2">, </span><span class="s0">int </span><span class="s1">repeats</span><span class="s2">) {</span>
+        <span class="s1">myElements</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">ScenarioElement</span><span class="s2">(</span><span class="s1">e</span><span class="s2">, </span><span class="s1">repeats</span><span class="s2">));</span>
+    <span class="s2">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Jouer ce scenario sur un bandeau</span>
+     <span class="s3">*</span>
+     <span class="s3">* </span><span class="s4">@param </span><span class="s3">b le bandeau ou s'afficher.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public class </span><span class="s1">scenarioThread </span><span class="s0">extends </span><span class="s1">Thread </span><span class="s2">{ }</span>
+    <span class="s0">public void </span><span class="s1">playOn</span><span class="s2">(</span><span class="s1">Bandeau b</span><span class="s2">) {</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">ScenarioElement element </span><span class="s2">: </span><span class="s1">myElements</span><span class="s2">) {</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">repeats </span><span class="s2">= </span><span class="s5">0</span><span class="s2">; </span><span class="s1">repeats </span><span class="s2">&lt; </span><span class="s1">element</span><span class="s2">.</span><span class="s1">repeats</span><span class="s2">; </span><span class="s1">repeats</span><span class="s2">++) {</span>
+                <span class="s1">element</span><span class="s2">.</span><span class="s1">effect</span><span class="s2">.</span><span class="s1">playOn</span><span class="s2">(</span><span class="s1">b</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
