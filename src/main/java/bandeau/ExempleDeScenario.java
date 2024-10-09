@@ -8,43 +8,74 @@ public class ExempleDeScenario {
      * @param args les "arguments de ligne de commande", transmis au lancement du programme
      */
     public static void main(String[] args) {
-        String message;
-        if (args.length > 0) // J'ai au moins un paramètre
-        {
-            message = args[0]; // le premier paramètre
-        } else {
-            message = "Démonstration du bandeau";
+        ExempleDeScenario instance = new ExempleDeScenario();
+        instance.executeScenario();
         }
+    public void executeScenario() {
+        // Création des bandeaux
+        BandeauVerrouillable b1 = new BandeauVerrouillable();
+        BandeauVerrouillable b2 = new BandeauVerrouillable();
+        BandeauVerrouillable b3 = new BandeauVerrouillable();
 
-        // On cree un scenario
-        Scenario s = new Scenario();
-        // On lui ajoute des effets
-        s.addEffect(new RandomEffect(message, 700), 1);
-        s.addEffect(new TeleType("Je m'affiche caractère par caractère", 100), 1);
-        s.addEffect(new Blink("Je clignote 10x", 100), 10);
-        s.addEffect(new Zoom("Je zoome", 50), 1);
-        s.addEffect(new FontEnumerator(10), 1);
-        s.addEffect(new Rainbow("Comme c'est joli !", 30), 1);
-        s.addEffect(new Rotate("2 tours à droite", 180, 4000, true), 2);
-        
-        // On cree les bandeaux
-        Bandeau b1 = new Bandeau();
-        //Bandeau b2 = new Bandeau();
-        //Bandeau b3 = new Bandeau();
-        System.out.println("CTRL+C pour terminer le programme");
-        // On doit jouer le scénario en même temps sur plusieurs bandeaux :
-        s.playOn(b1);
-        //s.playOn(b2);
-        
-        // On ne doit pas pouvoir changer un scénario quand il est en train de se jouer
+        System.out.println("CTRL-C pour terminer le programme");
+
+        // Création du scénario avec les effets
+        Scenario s = createScenario();
+
+        // Création de threads pour exécuter le scénario en parallèle sur chaque bandeau
+        Thread thread1 = new Thread(() -> {
+            while (true) { // Boucle infinie pour redémarrer le scénario sur b1
+                b1.lock();
+                try {
+                    s.playOn(b1);
+                } finally {
+                    b1.unlock();
+                }
+            }
+        });
+
+
+        Thread thread2 = new Thread(() -> {
+            b2.lock();
+            try {
+                s.playOn(b2);
+            } finally {
+                b2.unlock();
+            }
+        });
+
+        Thread thread3 = new Thread(() -> {
+            b3.lock();
+            try {
+                s.playOn(b3);
+            } finally {
+                b3.unlock();
+            }
+        });
+
+        // Démarrage des threads
+        thread1.start();
+        thread2.start();
+        thread3.start();
+
         try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {}
-        s.addEffect(new Rotate("2 tours à gauche", 180, 4000, false), 2);
-
-        // On rejoue le scénario sur b1 quand le premier jeu est fini
-        s.playOn(b1);
-
+            // Attendre que chaque thread termine
+            thread1.join();
+            thread2.join();
+            thread3.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
+    private Scenario createScenario() {
+        Scenario s = new Scenario();
+
+        //  effets
+        s.addEffect(new RandomEffect("Le jeu du pendu", 700), 1);
+        s.addEffect(new Rainbow("Comme c'est joli !", 30), 1);
+        s.addEffect(new Rotate("2 tours à droite", 180, 4000, true), 2);
+
+        return s;
+    }
 }
